@@ -1,0 +1,14 @@
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+export PATH="/Users/imdad/.fastlane/bin:/usr/lib/google-cloud-sdk/bin:/Applications/Postgres.app/Contents/Versions/9.6/bin:/Applications/Postgres.app/Contents/Versions/9.6/bin:/Users/imdad/scoodle/scoodle_api/venv/bin:/Users/imdad/.fastlane/bin:/Users/imdad/.rbenv/shims:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Applications/MAMP/bin/php/php5.5.3/bin:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Users/Imdad/.rvm/gems/ruby-2.2.0/bin:/Users/Imdad/.rvm/gems/ruby-2.2.0@global/bin:/Users/Imdad/.rvm/rubies/ruby-2.2.0/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/users/Imdad/Developer/Development Tools/Android/sdk/platform-tools:/users/Imdad/Developer/Development Tools/Android/sdk/tools:/opt/X11/bin:/usr/texbin:/Users/Imdad/.rvm/bin:/Users/Imdad/.yadr/bin:/Users/Imdad/.yadr/bin/yadr:/Applications/Postgres.app/Contents/Versions/latest/bin:/Users/imdad/Developer/Development Tools/Android/sdk/tools/:/Users/imdad/Developer/Development Tools/Android/sdk/platform-tools/:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Applications/MAMP/bin/php/php5.5.3/bin:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Users/Imdad/.rvm/gems/ruby-2.2.0/bin:/Users/Imdad/.rvm/gems/ruby-2.2.0@global/bin:/Users/Imdad/.rvm/rubies/ruby-2.2.0/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/users/Imdad/Developer/Development Tools/Android/sdk/platform-tools:/users/Imdad/Developer/Development Tools/Android/sdk/tools:/opt/X11/bin:/usr/texbin:/Users/Imdad/.rvm/bin:/Users/Imdad/.yadr/bin:/Users/Imdad/.yadr/bin/yadr:/Applications/Postgres.app/Contents/Versions/latest/bin:/Users/imdad/Library/Android/sdk/tools:/Users/imdad/Library/Android/sdk/platform-tools:/Users/imdad/.rvm/bin:/Users/imdad/.vimpkg/bin"
+
+export PATH="$PATH:$(yarn global bin)"
+source "$HOME/.cargo/env"
+
+function qtmono {
+    basename=$(basename "$1")
+    filename="${basename%.*}"
+    extension="${basename##*.}"
+
+    ffmpeg -i $1 -codec:v copy -af pan="mono|c0=FL" $filename-mono.$extension
+}

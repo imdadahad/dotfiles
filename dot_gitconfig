@@ -1,0 +1,17 @@
+[core]
+	excludesfile = /Users/imdad/.gitignore_global
+	editor = /usr/bin/vim
+[user]
+	email = imdadahad1@gmail.com
+	name = Imdad Ahad
+[diff]
+    tool = vimdiff
+[push]
+	default = current
+[pull]
+	rebase = false
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process

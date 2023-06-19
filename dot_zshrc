@@ -1,0 +1,352 @@
+# Path to your oh-my-zsh installation.
+
+export ZSH=/Users/Imdad/.oh-my-zsh
+export EDITOR=sublime
+
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="robbyrussell"
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git zsh-autosuggestions)
+
+# User configuration
+
+
+source $ZSH/oh-my-zsh.sh
+
+bindkey '^L' forward-word
+bindkey '^H' backward-word
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+export PATH=/Applications/MAMP/bin/php/php5.5.3/bin:$PATH
+
+alias python="python3"
+
+alias runvagrant="cd ~/Developer/PHP/Homestead && vagrant up"
+alias gopsm="cd ~/Developer/PHP/sm"
+export ANDROID_SDK=~/Developer/Development\ Tools/Android/sdk
+export PATH="$PATH:$ANDROID_SDK/tools/":"$ANDROID_SDK/platform-tools/":"$PATH"
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+eval "$(direnv hook zsh)"
+
+SSH_ENV=/Users/Imdad/.ssh/environment
+
+# start the ssh-agent
+function start_agent {
+    echo "Initializing new SSH agent..."
+    # spawn ssh-agent
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    echo succeeded
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add
+}
+
+export WORKON_HOME=~/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+source /usr/local/bin/virtualenvwrapper.sh
+
+# load virtualenvwrapper for python (after custom PATHs)
+venvwrap="virtualenvwrapper.sh"
+/usr/bin/which -s $venvwrap
+if [ $? -eq 0 ]; then
+    venvwrap=`/usr/bin/which $venvwrap`
+    source $venvwrap
+fi
+
+if [ -f "${SSH_ENV}" ]; then
+     . "${SSH_ENV}" > /dev/null
+     ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
+    }
+else
+    start_agent;
+fi
+
+export PATH="$HOME/.fastlane/bin:$PATH"
+ssh-add ~/.ssh/id_rsa
+
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# function cd {
+#     builtin cd "$@"
+#     if [[ $@ == *"coreapi"* ]]; then
+#           workon scoodleapi
+#     elif [ $@ == ".."]; then
+#         if [$CURRENT_DIR == *"coreapi"* ]; then
+#             deactivate
+#         fi
+#     fi
+# }
+
+function .. {
+    if [[ $PWD == *"coreapi"* ]]; then
+      deactivate
+    fi
+    builtin cd ".."
+}
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+alias api="cd ~/Developer/scoodle-api"
+alias web="cd ~/Developer/scoodle_web"
+alias chat="cd ~/Developer/chatapi"
+alias ios="cd ~/Developer/scoodle/native/native-ios"
+alias native="cd ~/projects/scoodle/native/"
+alias zion="cd ~/projects/zion/"
+alias emulator="cd \"/Users/imdad/Library/Android/sdk/tools\" && ./emulator -avd Nexus_5X_API_26"
+alias runandroid="cd ~/Developer/scoodle/native && react-native run-android"
+export IP="$(ifconfig | grep -A 1 'en0' | tail -1 | cut -d ':' -f 2 | cut -d ' ' -f 2)"
+alias coredb="psql service=core"
+alias chatdb="psql service=chat"
+export PATH="/Applications/Postgres.app/Contents/Versions/9.6/bin:/Applications/Postgres.app/Contents/Versions/9.6/bin:/Users/imdad/scoodle/scoodle_api/venv/bin:/Users/imdad/.fastlane/bin:/Users/imdad/.rbenv/shims:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Applications/MAMP/bin/php/php5.5.3/bin:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Users/Imdad/.rvm/gems/ruby-2.2.0/bin:/Users/Imdad/.rvm/gems/ruby-2.2.0@global/bin:/Users/Imdad/.rvm/rubies/ruby-2.2.0/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/users/Imdad/Developer/Development Tools/Android/sdk/platform-tools:/users/Imdad/Developer/Development Tools/Android/sdk/tools:/opt/X11/bin:/usr/texbin:/Users/Imdad/.rvm/bin:/Users/Imdad/.yadr/bin:/Users/Imdad/.yadr/bin/yadr:/Applications/Postgres.app/Contents/Versions/latest/bin:/Users/imdad/Developer/Development Tools/Android/sdk/tools/:/Users/imdad/Developer/Development Tools/Android/sdk/platform-tools/:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Applications/MAMP/bin/php/php5.5.3/bin:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Users/Imdad/.rvm/gems/ruby-2.2.0/bin:/Users/Imdad/.rvm/gems/ruby-2.2.0@global/bin:/Users/Imdad/.rvm/rubies/ruby-2.2.0/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/users/Imdad/Developer/Development Tools/Android/sdk/platform-tools:/users/Imdad/Developer/Development Tools/Android/sdk/tools:/opt/X11/bin:/usr/texbin:/Users/Imdad/.rvm/bin:/Users/Imdad/.yadr/bin:/Users/Imdad/.yadr/bin/yadr:/Applications/Postgres.app/Contents/Versions/latest/bin:/Users/imdad/Library/Android/sdk/tools:/Users/imdad/Library/Android/sdk/platform-tools:/Users/imdad/.rvm/bin"
+
+# Support for bash
+PROMPT_COMMAND='prompt'
+
+# Mirrored support for zsh. See: https://superuser.com/questions/735660/whats-the-zsh-equivalent-of-bashs-prompt-command/735969#735969
+precmd() { eval "$PROMPT_COMMAND" }
+
+function prompt()
+{
+    if [ "$PWD" != "$MYOLDPWD" ]; then
+        MYOLDPWD="$PWD"
+        test -e .venv && workon `cat .venv`
+    fi
+}
+alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl .'
+export REACT_EDITOR=sublime
+export PYTHONIOENCODING=UTF-8
+export SCOODLE_HEROKU=https://scoodle-api.herokuapp.com/
+export PATH="/usr/lib/google-cloud-sdk/bin:$PATH"
+export PATH="$HOME/.fastlane/bin:$PATH"
+
+# ----------------------
+# Git Aliases
+# ----------------------
+alias ga='git add'
+alias gaa='git add .'
+alias gaaa='git add --all'
+alias gau='git add --update'
+alias gb='git branch'
+alias gbd='git branch --delete '
+alias gc='git commit'
+alias gcm='git commit --message'
+alias gcf='git commit --fixup'
+alias gco='git checkout'
+alias gcob='git checkout -b'
+alias gcom='git checkout master'
+alias gcos='git checkout staging'
+alias gcod='git checkout develop'
+alias gd='git diff'
+alias gda='git diff HEAD'
+alias gi='git init'
+alias glg='git log --graph --oneline --decorate --all'
+alias gld='git log --pretty=format:"%h %ad %s" --date=short --all'
+alias gm='git merge --no-ff'
+alias gma='git merge --abort'
+alias gmc='git merge --continue'
+alias gp='git pull'
+alias gpr='git pull --rebase'
+alias gr='git rebase'
+alias gs='git status'
+alias gss='git status --short'
+alias gst='git stash'
+alias gsta='git stash apply'
+alias gstd='git stash drop'
+alias gstl='git stash list'
+alias gstp='git stash pop'
+alias gsts='git stash save'
+
+alias adb='/Users/Imdad/Library/Android/sdk/platform-tools/adb'
+
+# ----------------------
+# Git Functions
+# ----------------------
+# Git log find by commit message
+function glf() { git log --all --grep="$1"; }
+
+
+# SSH
+
+CORE_API_TAG='scoodle-coreapi'
+CHAT_API_TAG='scoodle-chatapi'
+WEB_TAG='scoodle-web'
+
+function ssh-scoodle() {
+    ADDRESS=`aws ec2 describe-instances --filters "Name=tag:Name,Values=$1" --region eu-west-1 | jq '.Reservations[].Instances[0].PublicDnsName' | tr -d '"'`
+    ssh -i ~/imdad-scoodle-keypair.pem $2@${ADDRESS}
+    echo $ADDRESS
+}
+
+ssh-api() {
+    ssh-scoodle $CORE_API_TAG admin
+}
+
+ssh-chat() {
+    ssh-scoodle $CHAT_API_TAG admin
+}
+
+ssh-web() {
+    ssh-scoodle $WEB_TAG ubuntu
+}
+
+api-shell() {
+    ENVIRONMENT=production python application.py shell
+}
+
+apidb() {
+    psql service=core
+}
+
+export PATH="/Users/imdad/.fastlane/bin:/usr/lib/google-cloud-sdk/bin:/Applications/Postgres.app/Contents/Versions/9.6/bin:/Applications/Postgres.app/Contents/Versions/9.6/bin:/Users/imdad/scoodle/scoodle_api/venv/bin:/Users/imdad/.fastlane/bin:/Users/imdad/.rbenv/shims:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Applications/MAMP/bin/php/php5.5.3/bin:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Users/Imdad/.rvm/gems/ruby-2.2.0/bin:/Users/Imdad/.rvm/gems/ruby-2.2.0@global/bin:/Users/Imdad/.rvm/rubies/ruby-2.2.0/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/users/Imdad/Developer/Development Tools/Android/sdk/platform-tools:/users/Imdad/Developer/Development Tools/Android/sdk/tools:/opt/X11/bin:/usr/texbin:/Users/Imdad/.rvm/bin:/Users/Imdad/.yadr/bin:/Users/Imdad/.yadr/bin/yadr:/Applications/Postgres.app/Contents/Versions/latest/bin:/Users/imdad/Developer/Development Tools/Android/sdk/tools/:/Users/imdad/Developer/Development Tools/Android/sdk/platform-tools/:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Applications/MAMP/bin/php/php5.5.3/bin:/Library/Frameworks/Python.framework/Versions/3.4/bin:/Users/Imdad/.rvm/gems/ruby-2.2.0/bin:/Users/Imdad/.rvm/gems/ruby-2.2.0@global/bin:/Users/Imdad/.rvm/rubies/ruby-2.2.0/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/users/Imdad/Developer/Development Tools/Android/sdk/platform-tools:/users/Imdad/Developer/Development Tools/Android/sdk/tools:/opt/X11/bin:/usr/texbin:/Users/Imdad/.rvm/bin:/Users/Imdad/.yadr/bin:/Users/Imdad/.yadr/bin/yadr:/Applications/Postgres.app/Contents/Versions/latest/bin:/Users/imdad/Library/Android/sdk/tools:/Users/imdad/Library/Android/sdk/platform-tools:/Users/imdad/.rvm/bin:/Users/imdad/.vimpkg/bin"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/imdad/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/imdad/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/imdad/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/imdad/google-cloud-sdk/completion.zsh.inc'; fi
+
+export LDFLAGS="-L/usr/local/opt/libpq/lib"
+export CPPFLAGS="-I/usr/local/opt/libpq/include"
+
+# tabtab source for electron-forge package
+# uninstall by removing these lines or running `tabtab uninstall electron-forge`
+[[ -f /private/tmp/SpotSpot/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /private/tmp/SpotSpot/node_modules/tabtab/.completions/electron-forge.zsh
+
+echo "export PYTHONSTARTUP=~/.pythonrc" >> ~/.profile
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+export PATH="/usr/local/opt/postgresql@10/bin:$PATH"
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+eval "$(pyenv init --path)"
+export SYSTEM_VERSION_COMPAT=1
+# in .bashrc
+function pip-versions {
+  pip install --use-deprecated=legacy-resolver $1==
+}
+export PATH="$HOME/.cargo/bin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+function tomono {
+    ffmpeg -i $1 -codec:v copy -af pan="mono | c0=FL" $2
+}
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+# Auto-source .env files
+for file in .env.*; do
+  if [[ -f $file ]]; then
+    source "$file"
+  fi
+done
+
+
+# Auto-source .env files
+for file in .env.*; do
+  if [[ -f $file ]]; then
+    source "$file"
+  fi
+done
+ 
+# Auto-source .env files
+for file in .env.*; do
+  if [[ -f $file ]]; then
+    source "$file"
+  fi
+done
+
+alias aws2='PATH'
+
+# Auto-source .env files
+for file in .env.*; do
+  if [[ -f $file ]]; then
+    source "$file"
+  fi
+done
+ 
+# Auto-source .env files
+for file in .env.*; do
+  if [[ -f $file ]]; then
+    source "$file"
+  fi
+done
+

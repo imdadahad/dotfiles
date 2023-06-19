@@ -1,0 +1,78 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+#!/bin/bash
+
+set -eufo pipefail
+
+formulae=(
+	autojump
+	bat
+	curl
+	deno
+    direnv
+	ffmpeg
+	git
+	git-delta
+	git-gui
+	jq
+	kibana
+	less
+	mitmproxy
+	multitail
+	nvm
+	pgcli
+	pure
+	pyenv
+	redis
+    sqlite
+	tealdeer
+	the_silver_searcher
+	tig
+	tree
+	wget
+    youtube-dl
+	zplug
+)
+casks=(
+	1password
+	1password/tap/1password-cli
+	adobe-creative-cloud
+	airtable
+	bartender
+	brave-browser
+	camo-studio
+	canon-eos-utility
+	clipgrab
+	descript
+    discord
+	docker
+    figma
+    iina
+    insomnia
+	iterm2
+	nordvpn
+    notion
+    numi
+	obsidian
+	polymail
+    postico
+    raycast
+    slack
+	spotify
+	sublime-text
+    telegram
+    the-unarchiver
+    transmission
+	visual-studio-code
+	zoom
+)
+
+brew update
+
+brew install ${formulae[@]}
+
+brew install --cask ${casks[@]}
+
+brew cleanup
+
+echo "app store these: things, theine, hand mirror, parcel"
+{{ end }}
